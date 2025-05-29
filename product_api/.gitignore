@@ -1,0 +1,57 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+**/logs/
+**/target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Spring Boot
+application-local.properties
+application-dev.properties
+application-prod.properties
+
+# Env
+.env
+
+# Java build
+*.class
+
+# Mac metadata
+*.DS_Store
+
+# Windows metadata
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Testing
+test-output/
+jacoco.exec
+
+# Eclipse
+*.classpath
+*.project
+*.settings/
+bin/
+
+# JAR/WAR files
+*.jar
+*.war
+*.ear
