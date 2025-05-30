@@ -36,6 +36,7 @@ interface ProductContextType {
   addCategory: (name: string) => Promise<void>;
 }
 
+
 export const ProductContext = createContext<ProductContextType>({} as ProductContextType);
 
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -50,6 +51,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
   });
   const [categories, setCategories] = useState<Category[]>([]);
   const [message, setMessage] = useState<string | null>(null);
+  
 
   const loadProducts = async () => {
     try {
@@ -60,6 +62,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       setMessage('Error loading products');
     }
   };
+
+  
 
   const loadCategories = async () => {
     try {
@@ -86,6 +90,8 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     loadProducts();
     loadCategories();
   }, []);
+
+  
 
   const filteredProducts = useMemo(() => {
     return allProducts.filter(product => {
@@ -121,6 +127,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
           expirationDate: product.expirationDate || null,
         };
         await createProduct(productToCreate);
+        await loadProducts();
         setMessage('Product created successfully');
       }
       closeModal();

@@ -20,7 +20,7 @@ public class ProductController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) Boolean inStock,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "100") int size,
             @RequestParam(defaultValue = "name") String sortBy
     ) {
         return service.getProducts(name, category, inStock, sortBy, page, size);
