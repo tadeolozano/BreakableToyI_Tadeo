@@ -48,8 +48,11 @@ const CreateEditModal: React.FC = () => {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
+    
+  
     setForm(selectedProduct ?? defaultForm);
-  }, [selectedProduct]);
+  }, [modalOpen]);
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -179,7 +182,7 @@ const CreateEditModal: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      <Snackbar
+      {/* <Snackbar
         open={snackOpen}
         autoHideDuration={3000}
         onClose={handleCloseSnack}
@@ -192,7 +195,7 @@ const CreateEditModal: React.FC = () => {
         >
           {saved ? 'Product saved successfully!' : 'Failed to save product.'}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </>
   );
 };

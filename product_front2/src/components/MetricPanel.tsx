@@ -20,38 +20,63 @@ const MetricsPanel: React.FC = () => {
     let totalValue = 0;
     let totalPriceSum = 0;
     let priceCount = 0;
-
-    const byCategory: Record<string, { totalStock: number; totalValue: number; avgPrice: number }> = {};
-
+  
+    const categoryDetails: Record<string, {
+      totalStock: number;
+      totalValue: number;
+      priceSum: number;
+      priceCount: number;
+    }> = {};
+  
     for (const product of products) {
       const { category, unitPrice, quantityInStock } = product;
-      
+  
       totalStock += quantityInStock;
       totalValue += quantityInStock * unitPrice;
-
+  
       if (quantityInStock > 0) {
         totalPriceSum += unitPrice;
         priceCount += 1;
       }
-
-      if (!byCategory[category]) {
-        byCategory[category] = { totalStock: 0, totalValue: 0, avgPrice: 0 };
+  
+      if (!categoryDetails[category]) {
+        categoryDetails[category] = {
+          totalStock: 0,
+          totalValue: 0,
+          priceSum: 0,
+          priceCount: 0,
+        };
       }
-
-      byCategory[category].totalStock += quantityInStock;
-      byCategory[category].totalValue += quantityInStock * unitPrice;
+  
+      categoryDetails[category].totalStock += quantityInStock;
+      categoryDetails[category].totalValue += quantityInStock * unitPrice;
+  
+      if (quantityInStock > 0) {
+        categoryDetails[category].priceSum += unitPrice;
+        categoryDetails[category].priceCount += 1;
+      }
     }
-
-    
+  
     const avgPrice = priceCount > 0 ? totalPriceSum / priceCount : 0;
-
-    for (const category in byCategory) {
-      const cat = byCategory[category];
-      cat.avgPrice = cat.totalStock > 0 ? cat.totalValue / cat.totalStock : 0;
+  
+    const byCategory: Record<string, {
+      totalStock: number;
+      totalValue: number;
+      avgPrice: number;
+    }> = {};
+  
+    for (const category in categoryDetails) {
+      const { totalStock, totalValue, priceSum, priceCount } = categoryDetails[category];
+      byCategory[category] = {
+        totalStock,
+        totalValue,
+        avgPrice: priceCount > 0 ? priceSum / priceCount : 0,
+      };
     }
-
+  
     return { totalStock, totalValue, avgPrice, byCategory };
   }, [products]);
+  
 
   return (
     <Paper elevation={3} sx={{ padding: 2, minWidth: 300 }}>
@@ -59,11 +84,7 @@ const MetricsPanel: React.FC = () => {
         Inventory Metrics
       </Typography>
 
-      <Box mb={2}>
-        <Typography>Total Stock: <strong>{metrics.totalStock}</strong></Typography>
-        <Typography>Total Value: <strong>${metrics.totalValue.toFixed(2)}</strong></Typography>
-        <Typography>Average Price: <strong>${metrics.avgPrice.toFixed(2)}</strong></Typography>
-      </Box>
+      
 
       <Divider sx={{ mb: 1 }} />
       <Typography variant="subtitle1" gutterBottom>
@@ -90,6 +111,11 @@ const MetricsPanel: React.FC = () => {
           ))}
         </TableBody>
       </Table>
+      <Box mt={2}>
+        <Typography>Total Stock: <strong>{metrics.totalStock}</strong></Typography>
+        <Typography>Total Value: <strong>${metrics.totalValue.toFixed(2)}</strong></Typography>
+        <Typography>Average Price: <strong>${metrics.avgPrice.toFixed(2)}</strong></Typography>
+      </Box>
     </Paper>
   );
 };

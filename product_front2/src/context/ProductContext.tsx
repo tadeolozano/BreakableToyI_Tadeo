@@ -51,14 +51,13 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
   });
   const [categories, setCategories] = useState<Category[]>([]);
   const [message, setMessage] = useState<string | null>(null);
-  
 
   const loadProducts = async () => {
     try {
       const data = await getProducts();
       setAllProducts(data);
     } catch (err) {
-      console.error('❌ Error loading products', err);
+      console.error('Error loading products', err);
       setMessage('Error loading products');
     }
   };
@@ -70,7 +69,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const data = await getCategories();
       setCategories(data);
     } catch (err) {
-      console.error('❌ Error loading categories', err);
+      console.error('Error loading categories', err);
       setMessage('Error loading categories');
     }
   };
@@ -134,7 +133,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       await loadProducts();
       await loadCategories();
     } catch (error) {
-      console.error('❌ Error saving product:', error);
+      console.error('Error saving product:', error);
       setMessage('Failed to save product');
     }
   };

@@ -74,7 +74,7 @@ const ProductTable: React.FC = () => {
     if (stock === 0) return { backgroundColor: '#ffcccc', textDecoration: 'line-through' };
     if (stock < 5) return { backgroundColor: '#ffe0e0' };
     if (stock <= 10) return { backgroundColor: '#fff4e0' };
-    return { backgroundColor: '#f0fff0' };
+    return ;
   };
 
   const getLineTrough = (stock: number) => {
